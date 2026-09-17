@@ -3,7 +3,10 @@ window.SITE_CONFIG = {
     instagram: "https://www.instagram.com/sfi_spcmc",
     facebook: "https://www.facebook.com/share/198BnXueJP/",
     email: "sfi.spcmc@gmail.com",
-    phone: "+91 8436497342 / +91 9123056976"
+    phone: [
+      "+918436497342",
+      "+919123056976"
+    ]
   },
 
   forms: {
