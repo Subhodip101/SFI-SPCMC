@@ -1,5 +1,3 @@
-/* SFI College Unit — Version 3 */
-
 const menuToggle = document.querySelector('.menu-toggle');
 const nav = document.querySelector('#nav');
 if (menuToggle && nav) {
@@ -20,7 +18,7 @@ function contactHref(type) {
   const value = contacts[type];
   if (!value) return '#contact';
   if (type === 'email') return `mailto:${value}`;
-  if (type === 'phone') return `tel:${value.replace(/[^+\d]/g, '')}`;
+  if (type === 'phone1' || type === 'phone2') return `tel:${value.replace(/[^+\d]/g, '')}`;
   return value;
 }
 
@@ -31,8 +29,9 @@ function contactLabel(type) {
     instagram: 'Add Instagram link',
     facebook: 'Add Facebook link',
     email: 'Add email address',
-    phone: 'Add phone number'
-  })[type];
+    phone1: 'Add phone number',
+    phone2: 'Add phone number'
+  })[type] || '';
 }
 
 document.querySelectorAll('[data-contact]').forEach(el => {
