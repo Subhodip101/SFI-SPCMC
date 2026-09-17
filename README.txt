@@ -60,7 +60,7 @@ Leave a value blank if you do not want that contact method displayed.
 
 GALLERY
 -------
-The sample images are in the gallery folder. Replace them with your own JPG,
+The sample images are in the gallery image files. Replace them with your own JPG,
 PNG or SVG images. The easiest method is to keep the same filenames:
 photo-1.svg through photo-6.svg.
 
