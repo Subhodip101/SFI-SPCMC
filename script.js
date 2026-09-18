@@ -1,3 +1,5 @@
+/* SFI College Unit — Version 3 */
+
 const menuToggle = document.querySelector('.menu-toggle');
 const nav = document.querySelector('#nav');
 if (menuToggle && nav) {
@@ -11,27 +13,37 @@ if (menuToggle && nav) {
   }));
 }
 
-const contacts = (window.SITE_CONFIG && SITE_CONFIG.contacts) || {};
-const forms = (window.SITE_CONFIG && SITE_CONFIG.forms) || {};
+const contacts = (window.SITE_CONFIG && window.SITE_CONFIG.contacts) || {};
+const forms = (window.SITE_CONFIG && window.SITE_CONFIG.forms) || {};
 
-function contactHref(type) {
+function phoneNumbers() {
+  const value = contacts.phone;
+  if (Array.isArray(value)) return value.filter(Boolean);
+  if (typeof value === 'string' && value.trim()) return [value.trim()];
+  return [];
+}
+
+function contactHref(type, index = 0) {
   const value = contacts[type];
   if (!value) return '#contact';
   if (type === 'email') return `mailto:${value}`;
-  if (type === 'phone1' || type === 'phone2') return `tel:${value.replace(/[^+\d]/g, '')}`;
+  if (type === 'phone') {
+    const number = phoneNumbers()[index] || phoneNumbers()[0];
+    return number ? `tel:${number.replace(/[^+\d]/g, '')}` : '#contact';
+  }
   return value;
 }
 
 function contactLabel(type) {
   const value = contacts[type];
-  if (value) return value;
-  return ({
-    instagram: 'Add Instagram link',
-    facebook: 'Add Facebook link',
-    email: 'Add email address',
-    phone1: 'Add phone number',
-    phone2: 'Add phone number'
-  })[type] || '';
+  if (type === 'instagram' && contacts.instagramLabel) return contacts.instagramLabel;
+  if (type === 'facebook' && contacts.facebookLabel) return contacts.facebookLabel;
+  if (type === 'email') return value || 'Add email address';
+  if (type === 'phone') return phoneNumbers().join(' / ') || 'Add phone number';
+  return value || ({
+    instagram: 'Add Instagram username',
+    facebook: 'Add Facebook page name'
+  })[type];
 }
 
 document.querySelectorAll('[data-contact]').forEach(el => {
@@ -43,6 +55,18 @@ document.querySelectorAll('[data-contact]').forEach(el => {
     el.rel = 'noopener noreferrer';
   }
 });
+
+// Render each phone number as its own dialable link.
+const phoneList = document.querySelector('[data-phone-list]');
+if (phoneList) {
+  phoneNumbers().forEach((number, index) => {
+    const link = document.createElement('a');
+    link.className = 'contact-link phone-link';
+    link.href = contactHref('phone', index);
+    link.textContent = number.replace(/^\+91(?=\d)/, '+91 ');
+    phoneList.appendChild(link);
+  });
+}
 
 // Gallery lightbox
 const lightbox = document.querySelector('#lightbox');
