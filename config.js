@@ -13,6 +13,6 @@ window.SITE_CONFIG = {
 
   forms: {
     contact: "",
-    join: ""
+    join: "xvkgoebb"
   }
 };
